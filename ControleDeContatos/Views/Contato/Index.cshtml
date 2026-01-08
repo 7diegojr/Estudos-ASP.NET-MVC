@@ -1,10 +1,12 @@
+@using Microsoft.VisualBasic
+@model List<ContatoModel>
 @{
     ViewData["Title"] = "Contatos";
 }
 <br />
 <div class="text-center">
     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-        <a class="btn btn-success" role="button" asp-controller="Contato" asp-action="Criar" >Adicionar novo contato</a>
+        <a class="btn btn-success" role="button" asp-controller="Contato" asp-action="Criar">Adicionar novo contato</a>
     </div>
 
     <h1 class="display-4">Listagem de Contatos</h1>
@@ -21,42 +23,24 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Ana Lívia Borges da Silva</td>
-                <td>bgs.ana08@gmail.com</td>
-                <td>(14) 99781-2974</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a role="button" class="btn btn-danger" asp-controller="Contato" asp-action="ExcluirConfirmacao">Excluir</a>
-                        <a role="button" class="btn btn-primary" asp-controller="Contato" asp-action="Editar">Editar</a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Diego Fernando dos Santos Junior</td>
-                <td>dfsntsjunior@gmail.com</td>
-                <td>(14) 99194-1596</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a role="button" class="btn btn-danger" asp-controller="Contato" asp-action="ExcluirConfirmacao">Excluir</a>
-                        <a role="button" class="btn btn-primary" asp-controller="Contato" asp-action="Editar">Editar</a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Nalivia e Junin</td>
-                <td>bgs.ana08@gmail.com</td>
-                <td>(14) 99781-2974</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a role="button" class="btn btn-danger" asp-controller="Contato" asp-action="ExcluirConfirmacao">Excluir</a>
-                        <a role="button" class="btn btn-primary" asp-controller="Contato" asp-action="Editar">Editar</a>
-                    </div>
-                </td>
-            </tr>
+            @if (Model != null && Model.Any())
+            {
+                foreach (ContatoModel contato in Model)
+                {
+                    <tr>
+                        <th scope="row">@contato.Id</th>
+                        <td>@contato.Nome</td>
+                        <td>@contato.Email</td>
+                        <td>@contato.Telefone</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" class="btn btn-danger" asp-route-id="@contato.Id" asp-controller="Contato" asp-action="ExcluirConfirmacao">Excluir</a>
+                                <a role="button" class="btn btn-primary" asp-route-id="@contato.Id" asp-controller="Contato" asp-action="Editar">Editar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
         </tbody>
     </table>
 </div>
